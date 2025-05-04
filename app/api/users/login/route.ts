@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { NextRequest, NextResponse } from "next/server";
 
-connect();
+await connect();
 export async function POST(req: NextRequest) {
   try {
     const reqBody = await req.json();
@@ -39,11 +39,28 @@ export async function POST(req: NextRequest) {
     };
 
     // Generate JWT Token
-    
-    const token = await jwt
 
+    const token = await jwt.sign(tokenData, process.env.JWT_SECRET!, {
+      expiresIn: "1d",
+    });
 
-  } catch (error: any) {
-    NextResponse.json({ error: error.message }, { status: 500 });
+    const response = NextResponse.json({
+      message: "Login successful",
+      success: true,
+    });
+
+    response.cookies.set("token", token, {
+      httpOnly: true,
+    });
+
+    return response;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+    return NextResponse.json(
+      { error: "An unknown error occurred" },
+      { status: 500 }
+    );
   }
 }

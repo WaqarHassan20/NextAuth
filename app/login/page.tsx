@@ -1,30 +1,58 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 export default function Login() {
+
+  const router = useRouter ();
+  const [loading, setLoading] = useState(false);
+  const [disabledButton, setDisabledButton] = useState(false);
+
   const [user, setUser] = useState({
     email: '',
     password: '',
   });
 
-  const onSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSignIn = async () => {
 
-    // Example sign-in logic
-    if (!user.email || !user.password) {
-      toast.error('Please fill in all fields.');
-      return;
+    try {
+      setLoading(true);
+      const response = await axios.post("/api/users/login",user);
+      console.log("Login successfully",response.data);
+      toast.success("Login successfully")
+      router.push("/profile");
+
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log("Login failed", error.message);
+        toast.error(error.message);
+      } else {
+        console.log("Login failed", error);
+        toast.error("An unexpected error occurred.");
+      }
+    }finally{
+      setLoading(false);
     }
 
-    // Simulate login success
-    toast.success('Logged in successfully!');
-  };
+  }
+
+  useEffect(()=>{
+
+    if (user.email.length>0 && user.password.length>0) {
+      setDisabledButton(false);
+    }
+    else{
+      setDisabledButton(true);
+    }
+ 
+  },[user])
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-gradient-to-br from-black via-gray-900 to-gray-800 text-white">
-      <h1 className="text-4xl font-bold neon-text">Login</h1>
+      <h1 className="text-4xl font-bold neon-text">{loading ? "Processing....." : "Log-In" }</h1>
       <form
         onSubmit={onSignIn}
         className="flex flex-col gap-6 w-full max-w-sm p-6 rounded-2xl glassy-bg shadow-lg backdrop-blur-md border border-gray-700"
@@ -57,8 +85,8 @@ export default function Login() {
           type="submit"
           className="bg-blue-600 hover:bg-blue-800 text-white font-semibold py-2 rounded-lg shadow-md transition-all duration-300 "
         >
-          Sign In
-        </button>
+          {disabledButton ? 'All fields required' : 'Log-In'}
+          </button>
 
         <Link
           href="/signup"

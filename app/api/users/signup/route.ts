@@ -42,9 +42,10 @@ export async function POST(request: NextRequest) {
       success: true,
       savedUser,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : "Something went wrong";
     return NextResponse.json(
-      { error: error.messsage || "Something went wrong" },
+      { error: errorMessage },
 
       { status: 500 }
     );
