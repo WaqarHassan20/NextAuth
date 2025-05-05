@@ -16,11 +16,15 @@ export default function Login() {
     password: '',
   });
 
-  const onSignIn = async () => {
 
+    const onLogIn = async (e: React.FormEvent) => {
+          e.preventDefault();      
     try {
       setLoading(true);
+      console.log("Loading has been turned on"); 
+      console.log("consle before the axios call");
       const response = await axios.post("/api/users/login",user);
+      console.log("Response data : ",response);
       console.log("Login successfully",response.data);
       toast.success("Login successfully")
       router.push("/profile");
@@ -54,7 +58,7 @@ export default function Login() {
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-gradient-to-br from-black via-gray-900 to-gray-800 text-white">
       <h1 className="text-4xl font-bold neon-text">{loading ? "Processing....." : "Log-In" }</h1>
       <form
-        onSubmit={onSignIn}
+        onSubmit={onLogIn}
         className="flex flex-col gap-6 w-full max-w-sm p-6 rounded-2xl glassy-bg shadow-lg backdrop-blur-md border border-gray-700"
       >
         <label htmlFor="email" className="text-sm font-medium">

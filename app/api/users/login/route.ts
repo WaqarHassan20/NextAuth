@@ -4,8 +4,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { NextRequest, NextResponse } from "next/server";
 
-await connect();
 export async function POST(req: NextRequest) {
+  await connect();
   try {
     const reqBody = await req.json();
     const { email, password } = reqBody;
@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
 
     // Generate JWT Token
 
-    const token = await jwt.sign(tokenData, process.env.JWT_SECRET!, {
+    const token = await jwt.sign(tokenData, process.env.JWT_TOKEN!, {
       expiresIn: "1d",
     });
 
@@ -52,6 +52,8 @@ export async function POST(req: NextRequest) {
     response.cookies.set("token", token, {
       httpOnly: true,
     });
+
+    console.log("Log has reached just before the response");
 
     return response;
   } catch (error: unknown) {

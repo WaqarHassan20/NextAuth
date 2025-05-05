@@ -1,11 +1,44 @@
 export default function UserProfile() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <h1 className="text-4xl font-bold neon-text">Profile</h1>
-      <div className="flex flex-col gap-6 w-full max-w-sm p-6 rounded-2xl glassy-bg shadow-lg backdrop-blur-md border border-gray-700">
-        <p className="text-sm font-medium">User Profile Information</p>
+    <div className="min-h-screen bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white p-8 pb-20 font-[family-name:var(--font-geist-sans)]">
+    <h1 className="text-5xl my-12 font-extrabold text-white bg-gradient-to-r from-teal-500 via-blue-600 to-indigo-700 bg-clip-text text-center">
+       User Profile Dashboard
+    </h1>
+
+
+      <div className="flex flex-col gap-12 w-full max-w-6xl p-8 rounded-2xl bg-opacity-80 backdrop-blur-2xl bg-black mx-auto shadow-2xl border-2 border-gray-700">
+      
+        {/* Profile Information Section */}
+        <div className="flex gap-6 mb-6">
+          <div className="w-32 h-32 rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 shadow-lg flex items-center justify-center">
+            <span className="text-3xl font-bold">A</span>
+          </div>
+          <div className="flex flex-col justify-center">
+            <p className="text-3xl font-semibold">JOHN DOE</p>
+            <p className="text-lg text-gray-300">Web Developer</p>
+            <p className="text-md text-gray-400 mt-2">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sit amet eros vitae erat hendrerit egestas.
+            </p>
+          </div>
+        </div>
+
+        {/* Contact Information Section */}
+        <div className="border-t-2 border-gray-600 pt-6">
+          <h2 className="text-2xl font-semibold text-white">Contact Information</h2>
+          <p className="text-sm text-gray-400 mt-2">Email: alice.johnson@example.com</p>
+          <p className="text-sm text-gray-400">Phone: +1 (555) 123-4567</p>
+        </div>
+
+
+
+        {/* About Me Section */}
+        <div className="border-t-2 border-gray-600 pt-6">
+          <h2 className="text-2xl font-semibold text-white">About Me</h2>
+          <p className="text-sm text-gray-400 mt-2">
+            I am a passionate web developer with a focus on building interactive and responsive user interfaces. I enjoy working with modern technologies like React and Tailwind CSS. Always eager to learn and take on new challenges.
+          </p>
+        </div>
       </div>
     </div>
-
   );
 }
