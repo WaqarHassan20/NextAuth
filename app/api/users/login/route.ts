@@ -49,9 +49,12 @@ export async function POST(req: NextRequest) {
       success: true,
     });
 
-    response.cookies.set("token", token, {
+    console.log("Token value : ", token);
+    
+    response.cookies.set("token",token, {
       httpOnly: true,
     });
+
 
     console.log("Log has reached just before the response");
 
