@@ -50,13 +50,14 @@ export const sendMail = async ({ email, mailType, userId }: SendMailParams) => {
           process.env.DOMAIN
         }/verifyemail?token=${hashedToken}">here</a> to ${
         mailType === "VERIFY" ? "verify your email" : "reset your password"
-      }</p>
+      } or copy and paste the link below in your browser. <br> ${
+        process.env.DOMAIN
+      }/verifyemail?token=${hashedToken}</p>
       `,
     };
 
     const mailResponse = await transport.sendMail(mailOptions);
     return mailResponse;
-    
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(`Error sending email: ${error.message}`);

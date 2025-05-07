@@ -5,7 +5,8 @@ export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname; // Extract the requested URL path
 
   // Define which paths are considered public (no authentication required)
-  const isPublicPath = path === "/login" || path === "/signup";
+  const isPublicPath =
+    path === "/login" || path === "/signup" || path === "/verifyEmail";
 
   // Get the authentication token from cookies
   const token = request.cookies.get("token")?.value;
@@ -23,7 +24,7 @@ export function middleware(request: NextRequest) {
 
 // Specify which routes the middleware should apply to
 export const config = {
-  matcher: ["/", "/profile", "/login", "/signup"], // Only these paths are matched by the middleware
+  matcher: ["/", "/profile", "/login", "/signup", "/verifyEmail"], // Only these paths are matched by the middleware
 };
 
 // Gist:

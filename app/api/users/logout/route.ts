@@ -8,7 +8,7 @@ export async function GET() {
     });
 
     const token = response.cookies.get("token");
-    console.log("Token value after logout : ", token);
+    console.log("Token value before logout : ", token);
 
     response.cookies.set("token", "", {
       httpOnly: true,
